@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import React,{Component} from 'react';
+import Identity from './components/Identity';
+
+class App extends React.Component {
+constructor(){
+  super()
+  this.setState= {
+    isIdentityEdit:true,
+  }
+}
+handleIdentitySubmit (info){//info = state passed as argument
+this.setState((prevState)=> {
+  return {
+    info: {
+      name:info.name,
+      email:info.email,
+      phone:info.phone
+    }, isIdentityEdit:!prevState.isIdentityEdit
+  }
+})
+}
+
+toggleEdit (valueName) {
+this.setState ((prevState)=> {
+let newState= {}
+newState[valueName]= !prevState[valueName] //value name is reusable for the 3 components.
+return newState
+})
+}
+
+  render(){ //when does render happen? Every update to the values
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      {this.state.isIdentityEdit? //this acess returns true or false, this item was created on comstructor
+      <IdentityDisplay submit={this.handleIdentitySubmit} info={this.state.info}/>: //display if true and pass state as info prop
+      // renders every change so we got a button again.Both components can just change props based on App submit func
+      <IdentityEdit submit={()=> this.toggleEdit('isIdentityEdit')} info={this.state.info}/> 
+      //Você pode usar uma arrow function para envolver um manipulador de eventos e passar parâmetros (sem ser o e):
+    //<button onClick={() => this.handleClick(id)} />
+    //as isIdentityEdit is changed, the render happens again and the form is displayed again, indepedent of state. Performance hit...
+      }
     </div>
-  );
+  )
+    }
 }
 
 export default App;
