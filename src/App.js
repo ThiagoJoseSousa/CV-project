@@ -1,6 +1,6 @@
 
 import React,{Component} from 'react';
-import Identity from './components/Identity';
+import IdentityDisplay, {IdentityEdit} from './components/Identity';
 
 class App extends React.Component {
 constructor(){
@@ -8,6 +8,8 @@ constructor(){
   this.setState= {
     isIdentityEdit:true,
   }
+  this.handleIdentitySubmit=this.handleIdentitySubmit.bind(this)
+  this.toggleEdit=this.toggleEdit.bind(this)
 }
 handleIdentitySubmit (info){//info = state passed as argument
 this.setState((prevState)=> {

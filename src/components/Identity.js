@@ -4,7 +4,7 @@
 
 import React, {Component} from "react";
 
-class IdentityEdit extends Component {
+class IdentityDisplay extends Component {
     constructor(props) {
         super(props)
         this.state= {name:props.info ? props.info.name:'', // if no prop is being passed, dont create any key. if yes, set its property to empty
@@ -25,12 +25,10 @@ this.props.submit(this.state) //fires a prop submit function on submit button
     When you directly update the state, it does not change this.state immediately. Instead, it creates a pending state transition, and accessing it after calling this method will only return the present value.
     You will lose control of the state across all components.
  */
-// Call overview to display
+
 }
 
-editContent = (e) => {
-    
-}
+
 
     render () {
         return (
@@ -47,4 +45,15 @@ editContent = (e) => {
     }
 }
 
-export default Identity;
+export class IdentityEdit extends Component {
+    render (){
+        return (
+            <div>
+                <h2>{this.props.info.name}</h2>
+                <p>Email:{this.props.info.email} -- Phone: {this.props.info.phone}</p>
+                <button onClick={this.props.submit}>edit</button>
+                </div>
+        )
+    }
+}
+export default IdentityDisplay;
