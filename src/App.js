@@ -1,15 +1,18 @@
 
 import React,{Component} from 'react';
 import IdentityDisplay, {IdentityEdit} from './components/Identity';
+import EducationalXpDisplay, {EducationalXpEdit} from './components/Educational xp'
 
 class App extends Component {
 constructor(){
   super()
   this.state= {
     isIdentityEdit:true,
+    isSchoolXpEdit:true,
   }
   this.handleIdentitySubmit=this.handleIdentitySubmit.bind(this)
   this.toggleEdit=this.toggleEdit.bind(this)
+  this.handleEducationalXpSubmit=this.handleEducationalXpSubmit.bind(this)
 }
 handleIdentitySubmit (info){//info = state passed as argument
 this.setState((prevState)=> {
@@ -23,6 +26,17 @@ this.setState((prevState)=> {
 })
 }
 
+handleEducationalXpSubmit(info) {
+  this.setState((prevState)=>{return {
+    info: {
+      schoolName:info.schoolName,
+      studyTitle:info.studyTitle,
+      studyDate:info.studyDate
+    },
+    isSchoolXpEdit:!prevState.isSchoolXpEdit
+  }})
+}
+
 toggleEdit (valueName) {
 this.setState ((prevState)=> {
 let newState= {}
@@ -34,13 +48,16 @@ return newState
   render(){ //when does render happen? Every update to the values
   return (
     <div className='App'>
-      {this.state.isIdentityEdit? //this acess returns true or false, this item was created on comstructor
-      <IdentityDisplay submit={this.handleIdentitySubmit} info={this.state.info}/>: //display if true and pass state as info prop
-      // renders every change so we got a button again.Both components can just change props based on App submit func
-      <IdentityEdit submit={()=> this.toggleEdit('isIdentityEdit')} info={this.state.info}/> 
+      {this.state.isIdentityEdit? //this acess returns true or false, this item was created on constructor (created first)
+      <IdentityDisplay submit={this.handleIdentitySubmit} info={this.state.info}/>: /* state is changed on submit bttn/enter bttn, but on submit It also alters the isEditable state, which is used to define what to render
+    React schedules a render every time the state of a component changes.*/
+      <IdentityEdit submit={()=> this.toggleEdit('isIdentityEdit')} info={this.state.info}/> } 
+      {
       //Você pode usar uma arrow function para envolver um manipulador de eventos e passar parâmetros (sem ser o e):
-    //<button onClick={() => this.handleClick(id)} />
-    //as isIdentityEdit is changed, the render happens again and the form is displayed again, indepedent of state. Performance hit...
+    //<button onClick={() => this.handleClick(id)} /> It'd cause a performance hit if rendered not conditionally
+         this.state.isSchoolXpEdit? 
+      <EducationalXpDisplay submit={this.handleEducationalXpSubmit} info={this.state.info}/> : 
+      <EducationalXpEdit submit={()=> this.toggleEdit('isSchoolXpEdit')} info={this.state.info}/>
       }
     </div>
   )

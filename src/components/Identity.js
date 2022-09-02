@@ -55,7 +55,8 @@ this.props.submit(this.state) //fires a prop submit function on submit button
                 <input type='number' id='phone' name='phone' value={this.state.phone} onChange={(e)=>this.handleInputChange(e,'phone')}/>    
                 </label>
                 <br />
-                    <button onClick={this.handleSubmit}>Submit</button> 
+                    <button onClick={this.handleSubmit}>Submit</button>  {/* state is changed on submit bttn/enter bttn, but on submit It also alters the isEditable state, which is used to define what to render
+                    React schedules a render every time the state of a component changes.*/}
             </form>
             </div>
         
