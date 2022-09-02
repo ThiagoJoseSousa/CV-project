@@ -2,10 +2,10 @@
 import React,{Component} from 'react';
 import IdentityDisplay, {IdentityEdit} from './components/Identity';
 
-class App extends React.Component {
+class App extends Component {
 constructor(){
   super()
-  this.setState= {
+  this.state= {
     isIdentityEdit:true,
   }
   this.handleIdentitySubmit=this.handleIdentitySubmit.bind(this)

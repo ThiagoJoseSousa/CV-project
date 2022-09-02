@@ -12,9 +12,16 @@ class IdentityDisplay extends Component {
         // if being passed, store values in state
             email:props.info? props.info.email:'',
             phone:props.info? props.info.phone:''}
-
+            this.handleInputChange = this.handleInputChange.bind(this)
+            this.handleSubmit = this.handleSubmit.bind(this)
     }
-
+handleInputChange (e,valueName) {
+    this.setState((prevState)=> {
+        let newState = {...prevState}
+        newState[valueName]= e.target.valueName
+        return newState
+    })
+}
  handleSubmit=(e) =>{
 e.preventDefault();
 this.props.submit(this.state) //fires a prop submit function on submit button
@@ -27,20 +34,31 @@ this.props.submit(this.state) //fires a prop submit function on submit button
  */
 
 }
-
-
-
     render () {
         return (
-            <section>
-                <form onSubmit={this.handleSubmit/*here will submit and display, edit button should change state?*/}>
-                    <input type='name' name='name'></input>
-                    <input type='email' name='email'></input>
-                    <input type='number' name='phone'></input>
-                    <button name='edit' onClick={this.editContent}></button> 
-                    <button type='submit'></button>
-                </form>
-            </section>
+            <div id='identity-info'>
+            <h2>Identity info</h2>
+            <form>
+            <label htmlFor='name'>
+                Name:
+                <input type='text' id='name' name='name' value={this.state.name} onChange={(e)=> this.handleInputChange(e,'name')} /> {/*changes input name on func 
+                and input returns the changed name on submit*/ }
+            </label>
+            <br />
+            <label htmlFor='email'>
+                Email:
+                <input type='text' id='email' name='email' value={this.state.email} onChange={(e)=>this.handleInputChange(e,'email')}/>
+            </label>
+            <br />
+                <label htmlFor='phone'>
+                Phone:
+                <input type='number' id='phone' name='phone' value={this.state.phone} onChange={(e)=>this.handleInputChange(e,'phone')}/>    
+                </label>
+                <br />
+                    <button onClick={this.handleSubmit}>Submit</button> 
+            </form>
+            </div>
+        
         )
     }
 }
@@ -51,7 +69,7 @@ export class IdentityEdit extends Component {
             <div>
                 <h2>{this.props.info.name}</h2>
                 <p>Email:{this.props.info.email} -- Phone: {this.props.info.phone}</p>
-                <button onClick={this.props.submit}>edit</button>
+                <button onClick={this.props.submit}>Edit</button>
                 </div>
         )
     }
