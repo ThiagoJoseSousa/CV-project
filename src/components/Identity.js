@@ -18,7 +18,7 @@ class IdentityDisplay extends Component {
 handleInputChange (e,valueName) {
     this.setState((prevState)=> {
         let newState = {...prevState}
-        newState[valueName]= e.target.valueName
+        newState[valueName]= e.target.value
         return newState
     })
 }
@@ -41,8 +41,8 @@ this.props.submit(this.state) //fires a prop submit function on submit button
             <form>
             <label htmlFor='name'>
                 Name:
-                <input type='text' id='name' name='name' value={this.state.name} onChange={(e)=> this.handleInputChange(e,'name')} /> {/*changes input name on func 
-                and input returns the changed name on submit*/ }
+                <input type='text' id='name' name='name' value={this.state.name} onChange={(e)=> this.handleInputChange(e,'name')} /> {/*on change changes name state on func 
+                and input returns the changed value on submit*/ }
             </label>
             <br />
             <label htmlFor='email'>
